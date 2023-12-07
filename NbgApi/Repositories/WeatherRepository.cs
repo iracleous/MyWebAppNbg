@@ -12,7 +12,8 @@ namespace NbgApi.Repositories
         public WeatherForecast? CreateWeatherForecast(WeatherForecast weather)
         {
             if (weather != null && weather.City!=null )
-            _repository.Add(weather.City, weather);
+
+            _repository[weather.City]= weather;
             return weather;
         }
 
@@ -24,7 +25,7 @@ namespace NbgApi.Repositories
 
         public WeatherForecast? ReadWeatherForecast(string city)
         {
-            return _repository[city];
+            return _repository.ContainsKey(city)?_repository[city]:null;
         }
 
         public List<WeatherForecast> ReadWeatherForecast()

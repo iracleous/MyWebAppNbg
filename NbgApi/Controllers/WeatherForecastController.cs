@@ -20,13 +20,7 @@ namespace NbgApi.Controllers
         }
 
 
-        [HttpGet]
-        [Route("ping")]
-        public string GetHello()
-        {
-            return "It is working";
-        }
-
+        
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -35,7 +29,7 @@ namespace NbgApi.Controllers
         }
 
         [HttpGet]
-        [Route("/{cityName}")]
+        [Route("{cityName}")]
         public WeatherForecast GetOneForecast([FromRoute]string cityName)
         {
             _logger.Log(LogLevel.Information, $"Display weather of {cityName}");
@@ -50,7 +44,7 @@ namespace NbgApi.Controllers
         }
 
         [HttpDelete]
-        [Route("/{cityName}")]
+        [Route("{cityName}")]
         public bool DeleteForecast([FromRoute] string cityName)
         {
             _logger.Log(LogLevel.Information, $"Delete weather of {cityName}");
