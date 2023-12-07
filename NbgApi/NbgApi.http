@@ -1,0 +1,6 @@
+@NbgApi_HostAddress = http://localhost:5101
+
+GET {{NbgApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
