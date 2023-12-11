@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 var context = new EshopDbContext();
 ICustomerServices services = new CustomerServices(context);
+Customer customer = new Customer() { Name = "Dimitris", Address = "" };
+services.CreateCustomer(customer);
+
+
 
 List<Customer> customers = services.GetCustomers();
 
@@ -17,7 +21,7 @@ customers.ForEach(customer =>
 Console.WriteLine();
 
 
-Customer? customerA = services.GetCustomerById(3);
+Customer? customerA = services.GetCustomerById(1);
 Console.WriteLine($"customer Id = {customerA?.Id}" +
        $" customer name {customerA?.Name}" +
        $" customer address = {customerA?.Address} ");

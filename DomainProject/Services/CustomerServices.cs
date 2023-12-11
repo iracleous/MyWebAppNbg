@@ -12,7 +12,6 @@ namespace DomainProject.Services;
 public class CustomerServices : ICustomerServices
 {
     private readonly EshopDbContext context;
-
     public CustomerServices(EshopDbContext context)
     {
         this.context = context;    
@@ -58,7 +57,6 @@ public class CustomerServices : ICustomerServices
             .FirstOrDefault();
         return customer;
     }
-
 
     // Read All
     public List<Customer> GetCustomers()

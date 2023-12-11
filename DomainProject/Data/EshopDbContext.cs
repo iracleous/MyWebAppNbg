@@ -12,6 +12,8 @@ namespace DomainProject.Data
     public class EshopDbContext: DbContext
     {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,6 +21,19 @@ namespace DomainProject.Data
 
             optionsBuilder.UseSqlServer(connectionString);
         }
+
+        public EshopDbContext()
+        {
+
+        }
+
+        public EshopDbContext(DbContextOptions<EshopDbContext> options)
+       : base(options)
+        {
+        }
+
+
+
 
     }
 }
