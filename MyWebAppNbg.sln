@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWebAppNbg", "MyWebAppNbg\MyWebAppNbg.csproj", "{D0290D0F-31CF-44F0-9F18-3EA22968CD60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NbgApi", "NbgApi\NbgApi.csproj", "{90ED5C89-F524-45C5-B67F-8E85813E556D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbgApi", "NbgApi\NbgApi.csproj", "{90ED5C89-F524-45C5-B67F-8E85813E556D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainProject", "DomainProject\DomainProject.csproj", "{FD29A163-0752-44CE-9552-75CB09A9A557}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{90ED5C89-F524-45C5-B67F-8E85813E556D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90ED5C89-F524-45C5-B67F-8E85813E556D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90ED5C89-F524-45C5-B67F-8E85813E556D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD29A163-0752-44CE-9552-75CB09A9A557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD29A163-0752-44CE-9552-75CB09A9A557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD29A163-0752-44CE-9552-75CB09A9A557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD29A163-0752-44CE-9552-75CB09A9A557}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
