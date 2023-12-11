@@ -1,6 +1,8 @@
+using DomainProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyWebAppNbg.Models;
 using MyWebAppNbg.Services;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace MyWebAppNbg.Controllers
@@ -31,6 +33,28 @@ namespace MyWebAppNbg.Controllers
             ContactInfo contact = contactInfoManager.ReadContactInfo();
             return View(contact);
         }
+
+        public IActionResult Customers()
+        {
+            _logger.Log(LogLevel.Information, "customers view");
+
+            using HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7252/api/customer/c");
+            var response =  client.GetAsync("");
+            response.Wait();
+            var result = response.Result;
+
+            List<Customer>? customers = new List<Customer>();
+            if (result.IsSuccessStatusCode)
+            {
+                //Storing the response details recieved from web api
+                var EmpResponse = result.Content.ReadAsStringAsync().Result;
+                //Deserializing the response recieved from web api and storing into the Employee list
+                  customers = JsonConvert.DeserializeObject<List<Customer>>(EmpResponse);
+            }
+            return View(customers);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

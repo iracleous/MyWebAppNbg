@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
+	  <!-- the default value is false. If it is set true causes runtime error with date fields-->
   </PropertyGroup>
 
   <ItemGroup>

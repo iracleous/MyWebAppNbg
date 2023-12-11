@@ -24,7 +24,6 @@ namespace DomainProject.Data
 
         public EshopDbContext()
         {
-
         }
 
         public EshopDbContext(DbContextOptions<EshopDbContext> options)
