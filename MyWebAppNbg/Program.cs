@@ -1,7 +1,32 @@
+using DomainProject.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+
+
+var optionsCon = builder.Configuration
+           .GetConnectionString("MyConn");
+builder.Services.AddDbContext<EshopDbContext>(options =>
+        options.UseSqlServer(optionsCon));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var app = builder.Build();
 
