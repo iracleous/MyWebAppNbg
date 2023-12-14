@@ -6,216 +6,232 @@
 </head>
 <body>
     <a href="#" onclick="getAllProduct()">getAllProduct</a>
-    <input type="text" id="productName" placeholder="productName"/>
+    <a href="#" onclick="createProduct()">createProduct</a>
+    <a href="#" onclick="findProduct()">findProduct</a>
+    <a href="#" onclick="changeProduct()">changeProduct</a>
+    <a href="#" onclick="deleteProduct()">deleteProduct</a>
+
+    <br />
+    <input type="text" id="productName" placeholder="productName" />
     <input type="text" id="productPrice" placeholder="productPrice" />
     <input type="text" id="productId" placeholder="productId" />
     <div id="resultDiv"></div>
     <div id="errorDiv"></div>
 
-<script>
+    <script>
 
-    //product management
-    /*
-        productName, productPrice, productId
-        resultDiv, errorDiv
-    */
-
-
-   // var url = "http://localhost:8080/athtechEshop_war_exploded/api/product/";
-    var url = "https://localhost:7252/api/customer/p";
+        //product management
+        /*
+            productName, productPrice, productId
+            resultDiv, errorDiv
+        */
 
 
-    function createProduct() {
+        // var url = "http://localhost:8080/athtechEshop_war_exploded/api/product/";
+        var url = "https://localhost:7252/api/customer/p/";
 
-        document.getElementById("errorDiv").innerHTML = '';
-        
-        var method = "POST";
-        var data = {
-            name: document.getElementById("productName").value,
-            price: Number(document.getElementById("productPrice").value)
-        };
 
-        fetch(url, {
-            method: method, // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
-            .then(res => res.json())
-            .then(d => {
-                document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+        function createProduct() {
+
+            document.getElementById("errorDiv").innerHTML = '';
+
+            var method = "POST";
+            var data = {
+                name: document.getElementById("productName").value,
+                price: Number(document.getElementById("productPrice").value)
+            };
+
+            fetch(url, {
+                method: method, // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
-            .catch(error => {
-                if (error instanceof TypeError && error.message.includes('API key')) {
-                    console.error('Invalid API key:', error);
-                    document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
-                } else {
-                    console.error('There was a problem with the Fetch operation:', error);
-                    document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
-                }
-            });
-    }
+                .then(res => res.json())
+                .then(d => {
+                    document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+                })
+                .catch(error => {
+                    if (error instanceof TypeError && error.message.includes('API key')) {
+                        console.error('Invalid API key:', error);
+                        document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
+                    } else {
+                        console.error('There was a problem with the Fetch operation:', error);
+                        document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
+                    }
+                });
+        }
 
 
-    function findProduct() {
-        document.getElementById("errorDiv").innerHTML = '';
- 
-        var method = "GET";
-        var productId = Number(document.getElementById("productId").value);
+        function findProduct() {
+            document.getElementById("errorDiv").innerHTML = '';
 
-        fetch(url + productId, {
-            method: method, // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            //  body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
-            .then(res => res.json())
-            .then(d => {
-                document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+            var method = "GET";
+            var productId = Number(document.getElementById("productId").value);
+
+            if (productId <= 0) {
+                return;
+            }
+
+
+            fetch(url + productId, {
+                method: method, // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                //  body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
-            .catch(error => {
-                if (error instanceof TypeError && error.message.includes('API key')) {
-                    console.error('Invalid API key:', error);
-                    document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
-                } else {
-                    console.error('There was a problem with the Fetch operation:', error);
-                    document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
-                }
-            });
-    }
+                .then(res => res.json())
+                .then(d => {
+                    document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+                })
+                .catch(error => {
+                    if (error instanceof TypeError && error.message.includes('API key')) {
+                        console.error('Invalid API key:', error);
+                        document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
+                    } else {
+                        console.error('There was a problem with the Fetch operation:', error);
+                        document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
+                    }
+                });
+        }
 
 
-    function getAllProduct() {
-        document.getElementById("errorDiv").innerHTML = '';
-
-  
-        var method = "GET";
+        function getAllProduct() {
+            document.getElementById("errorDiv").innerHTML = '';
 
 
-        fetch(url, {
-            method: method, // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            //  body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
-            .then(res => res.json())
-            .then(dataArray => {
-                document.getElementById("resultDiv").innerHTML = ""; // JSON.stringify(dataArray);
+            var method = "GET";
 
-                dataArray.forEach(element =>
-                    document.getElementById("resultDiv").innerHTML += "id = " + element.id + " nme = " + element.name + "<br>"
-                );
+
+            fetch(url, {
+                method: method, // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                //  body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
-            .catch(error => {
-                if (error instanceof TypeError && error.message.includes('API key')) {
-                    console.error('Invalid API key:', error);
-                    document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
-                } else {
-                    console.error('There was a problem with the Fetch operation:');
-                    document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:' + error;
-                }
-            });
-    }
+                .then(res => res.json())
+                .then(dataArray => {
+                    document.getElementById("resultDiv").innerHTML = ""; // JSON.stringify(dataArray);
 
-    function changeProduct() {
-        document.getElementById("errorDiv").innerHTML = '';
+                    dataArray.forEach(element =>
+                        document.getElementById("resultDiv").innerHTML += "id = " + element.id + " nme = " + element.name + "<br>"
+                    );
+                })
+                .catch(error => {
+                    if (error instanceof TypeError && error.message.includes('API key')) {
+                        console.error('Invalid API key:', error);
+                        document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
+                    } else {
+                        console.error('There was a problem with the Fetch operation:');
+                        document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:' + error;
+                    }
+                });
+        }
 
-        var method = "PUT";
+        function changeProduct() {
+            document.getElementById("errorDiv").innerHTML = '';
 
-        var data = {
-            id: Number(document.getElementById("productId").value),
-            name: document.getElementById("productName").value,
-            price: Number(document.getElementById("productPrice").value)
-        };
+            var method = "PUT";
+
+            var data = {
+                id: Number(document.getElementById("productId").value),
+                name: document.getElementById("productName").value,
+                price: Number(document.getElementById("productPrice").value)
+            };
 
 
-        fetch(url, {
-            method: method, // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            //  body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
-            .then(res => res.json())
-            .then(d => {
-                document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+            fetch(url, {
+                method: method, // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(data), // body data type must match "Content-Type" header
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                //  body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
-            .catch(error => {
-                if (error instanceof TypeError && error.message.includes('API key')) {
-                    console.error('Invalid API key:', error);
-                    document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
-                } else {
-                    console.error('There was a problem with the Fetch operation:', error);
-                    document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
-                }
-            });
-    }
+                .then(res => res.json())
+                .then(d => {
+                    document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+                })
+                .catch(error => {
+                    if (error instanceof TypeError && error.message.includes('API key')) {
+                        console.error('Invalid API key:', error);
+                        document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
+                    } else {
+                        console.error('There was a problem with the Fetch operation:', error);
+                        document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
+                    }
+                });
+        }
 
 
-    function deleteProduct() {
-        document.getElementById("errorDiv").innerHTML = '';
- 
-        var method = "DELETE";
-        var productId = Number(document.getElementById("productId").value);
+        function deleteProduct() {
+            document.getElementById("errorDiv").innerHTML = '';
 
-        fetch(url + productId, {
-            method: method, // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            //  body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
-            .then(res => res.json())
-            .then(d => {
-                document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+            var method = "DELETE";
+            var productId = Number(document.getElementById("productId").value);
+
+            if (productId <= 0) {
+                return;
+            }
+
+
+            fetch(url + productId, {
+                method: method, // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                //  body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
-            .catch(error => {
-                if (error instanceof TypeError && error.message.includes('API key')) {
-                    console.error('Invalid API key:', error);
-                    document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
-                } else {
-                    console.error('There was a problem with the Fetch operation:', error);
-                    document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
-                }
-            });
-    }
+                .then(res => res.json())
+                .then(d => {
+                    document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+                })
+                .catch(error => {
+                    if (error instanceof TypeError && error.message.includes('API key')) {
+                        console.error('Invalid API key:', error);
+                        document.getElementById("errorDiv").innerHTML = 'Invalid API key:' + error;
+                    } else {
+                        console.error('There was a problem with the Fetch operation:', error);
+                        document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
+                    }
+                });
+        }
 
 
-</script>
+    </script>
 
 </body>
 </html>

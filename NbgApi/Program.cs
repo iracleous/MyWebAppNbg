@@ -18,9 +18,17 @@ builder.Services.AddScoped<IWeatherForcastService, WeatherForcastService>();
 builder.Services.AddScoped<ICustomerServices, CustomerServices>();
 builder.Services.AddScoped<IProductServices, ProductServices>();
 
+var optionsCon =  builder.Configuration
+           .GetConnectionString("MyConn");
+
+using (var dbContext = new EshopDbContext( ))
+{
+    // Apply pending migrations and create/update the database
+    dbContext.Database.Migrate();
+}
+
 builder.Services.AddDbContext<EshopDbContext>(options =>
-        options.UseSqlServer(builder.Configuration
-           .GetConnectionString("MyConn")));
+        options.UseSqlServer(optionsCon));
 
  
 

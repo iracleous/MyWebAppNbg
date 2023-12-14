@@ -38,13 +38,13 @@ namespace MyWebAppNbg.Controllers
         {
             _logger.Log(LogLevel.Information, "customers view");
 
-            using HttpClient client = new HttpClient();
+            using HttpClient client = new ();
             client.BaseAddress = new Uri("https://localhost:7252/api/customer/c");
             var response =  client.GetAsync("");
             response.Wait();
             var result = response.Result;
 
-            List<Customer>? customers = new List<Customer>();
+            List<Customer>? customers = [];
             if (result.IsSuccessStatusCode)
             {
                 //Storing the response details recieved from web api

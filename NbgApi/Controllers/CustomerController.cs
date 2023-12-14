@@ -39,14 +39,11 @@ namespace NbgApi.Controllers
         {
             _logger.Log(LogLevel.Information, "Creating a new customer");
             return _services.CreateCustomer(customer);
-
         }
 
 
-
-
         [HttpGet]
-        [Route("{id}")]
+        [Route("c/{id}")]
         public Customer? GetById([FromRoute]int id)
         {
             _logger.Log(LogLevel.Information, "Getting all customers");
@@ -62,7 +59,38 @@ namespace NbgApi.Controllers
             return [.. _productServices.GetProducts()];
         }
 
+        [HttpGet]
+        [Route("p/{id}")]
+        public Product? GetProductById([FromRoute] int id)
+        {
+            _logger.Log(LogLevel.Information, "Getting all products");
+            return _productServices.GetProductById(id);
+        }
 
+        [HttpPost]
+        [Route("p")]
+        public Product? CreateProduct(Product product)
+        {
+            _logger.Log(LogLevel.Information, "Creating a new product");
+            return _productServices.CreateProduct(product);
+        }
+
+        [HttpPut]
+        [Route("p")]
+        public Product? UpdateProduct(Product product)
+        {
+            _logger.Log(LogLevel.Information, "Updating a product");
+            return _productServices.UpdateProduct(product.Id,product.Price);
+        }
+
+        [HttpDelete]
+        [Route("p/{id}")]
+        public bool DeleteProduct([FromRoute] int id)
+        {
+            _logger.Log(LogLevel.Information, "Deleting a product");
+            _productServices.DeleteProduct(id);
+            return true;
+        }
 
     }
 }

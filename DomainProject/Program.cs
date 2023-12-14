@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 var context = new EshopDbContext();
 ICustomerServices services = new CustomerServices(context);
-Customer customer = new Customer() { Name = "Dimitris", Address = "" };
+var customer = new Customer() { Name = "Dimitris", Address = "" };
 services.CreateCustomer(customer);
 
 

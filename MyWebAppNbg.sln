@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWebAppNbg", "MyWebAppNbg\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NbgApi", "NbgApi\NbgApi.csproj", "{90ED5C89-F524-45C5-B67F-8E85813E556D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainProject", "DomainProject\DomainProject.csproj", "{FD29A163-0752-44CE-9552-75CB09A9A557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainProject", "DomainProject\DomainProject.csproj", "{FD29A163-0752-44CE-9552-75CB09A9A557}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A0150C4-CE15-4195-A0EA-18B75DFC9DFB}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

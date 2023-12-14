@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model  DomainProject.Models.Customer
+
+<form asp-action="">
+
+
+<select asp-for="Category" class="form-control"
+        asp-items="@Html.GetEnumSelectList<DomainProject.Models.CustomerCategory>()"></select>
+            
+        </form>
