@@ -28,10 +28,9 @@ namespace NbgApi.Controllers
         [Route("c")]
         public List<Customer> GetAllCustomers()
         {
-            _logger.Log(LogLevel.Information, "Getting all customers");
+           _logger.Log(LogLevel.Information, "Getting all customers");
            return [.. _services.GetCustomers()] ;
-           
-        }
+         }
 
         [HttpPost]
         [Route("c")]

@@ -10,11 +10,8 @@
 {
     @foreach (var item in Model)
     {
-        <p> @item.Name </p>
+        <p> Id = @item.Id  Name = @item.Name </p>
     }
-    @Html.DropDownList("ProductCategory",
-                    Html.GetEnumSelectList<DomainProject.Models.ProductCategory>(),
-                    "Select ProductCategory", new { @class = "form-control" })
- 
+  
 
 }     

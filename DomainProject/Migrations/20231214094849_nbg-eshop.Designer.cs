@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DomainProject.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    [Migration("20231211213834_dimv2")]
-    partial class dimv2
+    [Migration("20231214094849_nbg-eshop")]
+    partial class nbgeshop
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

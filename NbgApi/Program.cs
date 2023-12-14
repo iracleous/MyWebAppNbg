@@ -14,6 +14,13 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddControllers();
 
+// swagger step 1
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+
+
 builder.Services.AddScoped<IWeatherForcastService, WeatherForcastService>();
 builder.Services.AddScoped<ICustomerServices, CustomerServices>();
 builder.Services.AddScoped<IProductServices, ProductServices>();
@@ -30,7 +37,7 @@ using (var dbContext = new EshopDbContext( ))
 builder.Services.AddDbContext<EshopDbContext>(options =>
         options.UseSqlServer(optionsCon));
 
- 
+
 
 
 //cors 2 
@@ -47,6 +54,17 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+
+
+//swagger step 2
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
 
 // Configure the HTTP request pipeline.
 
