@@ -58,7 +58,7 @@ namespace MyWebAppNbg.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Customers.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

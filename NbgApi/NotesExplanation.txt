@@ -1,0 +1,20 @@
+﻿AddTransient
+When you use AddTransient, a new instance of the service is created every time 
+it's requested, and it's disposed of when the request is finished.
+This is suitable for services that are stateless and don't maintain any state between requests.
+
+AddScoped
+When you use AddScoped, a single instance of the service is created for each scope. 
+In a web application, a scope typically corresponds to an HTTP request.
+The service instance is reused throughout the scope's lifetime and 
+then disposed of when the scope ends.
+This is useful for services that maintain some state during a single HTTP request.
+
+AddSingleton
+When you use AddSingleton, a single instance of the service is created for the lifetime 
+of the application.
+This means the service is shared among all requests and clients throughout the lifetime 
+of the application.
+It's suitable for services that are stateless or designed to be shared globally.
+
+/////////////////////////////////////////////////////////////////////////////

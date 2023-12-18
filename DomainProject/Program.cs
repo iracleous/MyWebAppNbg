@@ -4,24 +4,25 @@ using DomainProject.Models;
 using DomainProject.Services;
 using Microsoft.EntityFrameworkCore;
 
+Console.WriteLine("Hello");
 
-var context = new EshopDbContext();
-ICustomerServices services = new CustomerServices(context);
-var customer = new Customer() { Name = "Dimitris", Address = "" };
-services.CreateCustomer(customer);
-
-
-
-List<Customer> customers = services.GetCustomers();
-
-customers.ForEach(customer =>
-       Console.WriteLine($"customer Id = {customer.Id}" +
-       $" customer name {customer.Name}" +
-       $" customer address = {customer.Address} "));
-Console.WriteLine();
+//var context = new EshopDbContext();
+//ICustomerServices services = new CustomerServices(context);
+//var customer = new Customer() { Name = "Dimitris", Address = "" };
+//services.CreateCustomer(customer);
 
 
-Customer? customerA = services.GetCustomerById(1);
-Console.WriteLine($"customer Id = {customerA?.Id}" +
-       $" customer name {customerA?.Name}" +
-       $" customer address = {customerA?.Address} ");
+
+//List<Customer> customers = services.GetCustomers();
+
+//customers.ForEach(customer =>
+//       Console.WriteLine($"customer Id = {customer.Id}" +
+//       $" customer name {customer.Name}" +
+//       $" customer address = {customer.Address} "));
+//Console.WriteLine();
+
+
+//Customer? customerA = services.GetCustomerById(1);
+//Console.WriteLine($"customer Id = {customerA?.Id}" +
+//       $" customer name {customerA?.Name}" +
+//       $" customer address = {customerA?.Address} ");

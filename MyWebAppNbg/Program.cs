@@ -1,12 +1,18 @@
 using DomainProject.Data;
+using DomainProject.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
-
+builder.Services.AddControllersWithViews()
+    
+    .AddJsonOptions(options =>
+           {
+               options.JsonSerializerOptions
+                .ReferenceHandler = ReferenceHandler.Preserve;
+           });
 
 
 var optionsCon = builder.Configuration
@@ -15,19 +21,8 @@ builder.Services.AddDbContext<EshopDbContext>(options =>
         options.UseSqlServer(optionsCon));
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// JSON options
+ 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

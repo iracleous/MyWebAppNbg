@@ -1,4 +1,5 @@
-﻿using DomainProject.Models;
+﻿using DomainProject.Dto;
+using DomainProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace DomainProject.Services;
 
 public interface ICustomerServices
 {
-    public Customer? CreateCustomer(Customer customer);
-    public List<Customer>  GetCustomers();
-    public Customer? GetCustomerById(int customerId); 
-    public Customer? GetCustomerByName(string name);
-    public Customer? UpdateCustomer(int customerId, string newAddress);
-    public void DeleteCustomer(int customerId);
+    public Task<ResponseApi<Customer>> CreateCustomerAsync(Customer customer);
+    public Task<ResponseApi<List<Customer>>>  GetCustomersAsync();
+    //public Task<ResponseApi<Customer?>> GetCustomerByIdAsync(int customerId); 
+    //public Task<ResponseApi<Customer?>> GetCustomerByNameAsync(string name);
+    //public Task<ResponseApi<Customer?>> UpdateCustomerAsync(int customerId, string newAddress);
+    //public Task DeleteCustomerAsync(int customerId);
 }
 
 public interface IProductServices
@@ -39,7 +40,7 @@ public interface IServices<T>
 
 public interface IBasketServices
 {
-    public Basket? CreateBasket(Basket Basket);
+    public Task<Basket?> CreateBasket(int customerId);
     public List<Basket> GetBaskets();
     public Basket? GetBaskettById(int basketId);
     public void DeleteBasket(int basketId);
