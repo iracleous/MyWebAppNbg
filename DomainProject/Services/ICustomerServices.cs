@@ -40,14 +40,15 @@ public interface IServices<T>
 
 public interface IBasketServices
 {
-    public Task<Basket?> CreateBasket(int customerId);
+    public Task<ResponseApi<Basket>> CreateBasketAsync(int customerId);
+    public Task<ResponseApi<Basket>> GetBaskettById(int basketId);
+
     public List<Basket> GetBaskets();
-    public Basket? GetBaskettById(int basketId);
     public void DeleteBasket(int basketId);
 
 
     //
-    public void AddProductToBasket(Product product, Basket basket);
+    public Task<ResponseApi<Basket>> AddProductToBasketAsync(int productId, int basketId);
     public void RemoveProductFromBasket(Product product, Basket basket);
     public decimal GetTotalCost(Basket basket);
     public void AssignCustomerToBasket(Customer customer, Basket basket);
