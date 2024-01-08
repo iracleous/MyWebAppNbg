@@ -30,7 +30,11 @@ builder.Services.AddScoped<IBasketServices, BasketServices>();
 var optionsCon =  builder.Configuration.GetConnectionString("MyConn");
 
 // Apply pending migrations and create/update the database
-using (var dbContext = new EshopDbContext( ))
+var optionsBuilder = new DbContextOptionsBuilder<EshopDbContext>();
+optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("MyConn"));
+
+using (var dbContext = new EshopDbContext(optionsBuilder.Options))
+
 {
     dbContext.Database.Migrate();
 }
@@ -57,26 +61,26 @@ builder.Services.AddCors(options =>
  * receive an OpenID Connect bearer token.
  * */
 
-builder.Services
-    .AddAuthentication(x =>
-    {
-        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("YourSecretKey")),
-            ValidIssuer = "YourIssuer",
-            ValidAudience = "YourAudience"
-        };
-    });
+//builder.Services
+//    .AddAuthentication(x =>
+//    {
+//        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    })
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateLifetime = true,
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = new SymmetricSecurityKey(
+//                Encoding.UTF8.GetBytes("YourSecretKey")),
+//            ValidIssuer = "YourIssuer",
+//            ValidAudience = "YourAudience"
+//        };
+//    });
 
 var app = builder.Build();
 

@@ -2,6 +2,7 @@
 using DomainProject.Dto;
 using DomainProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,29 +15,46 @@ namespace DomainProject.Services;
 public class CustomerServices : ICustomerServices
 {
     private readonly EshopDbContext _context;
-    public CustomerServices(EshopDbContext context)
+    private readonly ILogger<CustomerServices> _logger;
+
+    public CustomerServices(EshopDbContext context, 
+        ILogger<CustomerServices> logger)
     {
-        _context = context;    
+        _context = context; 
+        _logger = logger;
     }
 
 
     // Create a new Customer
-    public async Task<ResponseApi<Customer>> CreateCustomerAsync(Customer customer)
+    public async Task<ResponseApi<Customer>> CreateCustomerAsync
+        (Customer customer)
     {
-        int status = 0;
+        _logger.Log(LogLevel.Information, "CreateCustomerAsync started");
+        int status =  CustomErrors.OK;
         string message;
 
-        if (customer != null) 
+        // simple validation
+        if (customer != null && customer.Name!= null ) 
         { 
             _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
-            message = "the customer has been successfully created";
+            try
+            {
+                await _context.SaveChangesAsync();
+                message = "the customer has been successfully created";
+            }
+            catch(Exception ex)
+            {
+                status = CustomErrors.EXCEPTION;
+                message = ex.Message;
+            }
+            
         }
         else
         {
-            status = -1;
+            status = CustomErrors.NULL_INPUT;
             message = "the input was null and the customer has has not been created";
         }
+        _logger.Log(LogLevel.Information, "CreateCustomerAsync ended");
         return new ResponseApi<Customer>
         {
             Data = customer,
@@ -48,11 +66,28 @@ public class CustomerServices : ICustomerServices
   // Read All
     public async Task<ResponseApi<List<Customer>>> GetCustomersAsync() 
     {
-        return new ResponseApi<List<Customer>>
+        _logger.Log(LogLevel.Information, "GetCustomersAsync started/ended");
+
+        try
         {
-            Data = await _context.Customers.ToListAsync(),
-            Status = 0,
-        };
+            return new ResponseApi<List<Customer>>
+            {
+                Data = await _context.Customers.ToListAsync(),
+                Status = CustomErrors.OK,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseApi<List<Customer>>
+            {
+                Message = ex.Message,
+                Status = CustomErrors.EXCEPTION,
+            };
+        }
+         
+
+
+        
     }
 
 

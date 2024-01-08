@@ -11,7 +11,7 @@ namespace NbgApi.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerServices _services;
+    private readonly ICustomerServices _customerServices;
     private readonly IProductServices _productServices;
     private readonly ILogger<CustomerController> _logger;
 
@@ -19,7 +19,7 @@ public class CustomerController : ControllerBase
         IProductServices productServices,
         ILogger<CustomerController> logger)
     {
-        _services = services;
+        _customerServices = services;
         _productServices = productServices;
         _logger = logger;
     }
@@ -38,17 +38,16 @@ public class CustomerController : ControllerBase
     public async Task<ResponseApi<List<Customer>>> GetAllCustomersResponse()
     {
         _logger.Log(LogLevel.Information, "Getting all customers");
-        return await _services.GetCustomersAsync();
-         
+        return await _customerServices.GetCustomersAsync();
     }
 
 
-[HttpPost]
+    [HttpPost]
     [Route("c")]
     public async Task<ResponseApi<Customer>> CreateCustomer(Customer customer)
     {
         _logger.Log(LogLevel.Information, "Creating a new customer");
-        return await _services.CreateCustomerAsync(customer);
+        return await _customerServices.CreateCustomerAsync(customer);
     }
 
 
