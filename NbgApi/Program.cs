@@ -8,11 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NbgApi.Services;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+ 
+
+
+builder.Services.AddControllers()
+
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions
+         .ReferenceHandler = ReferenceHandler.Preserve;
+    });
+
+
+
+
+
 
 //cors 1/3 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
