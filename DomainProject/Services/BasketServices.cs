@@ -156,21 +156,22 @@ namespace DomainProject.Services
         {
             var productId = orderItem.ProductId;
             var basketId = orderItem.BasketId;
-            try { 
-///* error in execution */
+            try {
+                /* error in execution */
 
-//                var basket = await _context.Baskets
-//                    .Include(basket => basket.Products)
-//                    .Where(basket => basket.Id == basketId)
-//                    .SingleAsync();
+                var basket = await _context.Baskets
+                    .Include(basket => basket.Products)
+                    .Where(basket => basket.Id == basketId)
+                    .SingleAsync();
 
+                var productToRemove = 
+                    basket.Products.FirstOrDefault(c => c.Id == productId); 
 
-//                var productsToRemove = basket
-//                    .Products
-//                    .Where(product => product.Id == productId);
-//                foreach ( var product in productsToRemove ) { basket.Products.Remove(product);  }
-
-                await _context.SaveChangesAsync();
+                if (productToRemove != null)
+                {
+                    basket.Products.Remove(productToRemove);
+                    await _context.SaveChangesAsync();
+                }
 
                 return new ResponseApi<bool>
                 {
