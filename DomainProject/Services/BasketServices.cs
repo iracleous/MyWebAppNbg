@@ -157,8 +157,6 @@ namespace DomainProject.Services
             var productId = orderItem.ProductId;
             var basketId = orderItem.BasketId;
             try {
-                /* error in execution */
-
                 var basket = await _context.Baskets
                     .Include(basket => basket.Products)
                     .Where(basket => basket.Id == basketId)
@@ -188,11 +186,6 @@ namespace DomainProject.Services
                 };
 
             }
-
-            
-
-
-
         }
 
         public async Task<ResponseApi<decimal>> GetTotalCostAsync(int basketId)
