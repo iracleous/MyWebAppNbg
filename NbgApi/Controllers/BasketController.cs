@@ -25,22 +25,22 @@ public class BasketController : ControllerBase
     public async Task<ResponseApi<Basket>> GetBasket(int basketId)
     {
         _logger.Log(LogLevel.Information, "method GetBasket starts/ends");
-        return await _basketServices.GetBaskettById(basketId);
+        return await _basketServices.GetBaskettByIdAsync(basketId);
     }
 
     [HttpPost]
-    [Route("addbasket/{customerId}")]
-    public async Task<ResponseApi<Basket>> CreateBasket(int customerId)
+    [Route("addbasket")]
+    public async Task<ResponseApi<Basket>> CreateBasket(CustomerInfo customerInfo)
     {
         _logger.Log(LogLevel.Information, "method CreateBasket starts/ends");
-        return await _basketServices.CreateBasketAsync(customerId);
+        return await _basketServices.CreateBasketAsync(customerInfo);
     }
 
     [HttpPost]
-    [Route("addTobasket/{basketId}/{productId}")]
-    public async Task<ResponseApi<Basket>> AddToBasket(int productId, int basketId)
+    [Route("addTobasket")]
+    public async Task<ResponseApi<Basket>> AddToBasket(OrderItem orderItem)
     {
         _logger.Log(LogLevel.Information, "method AddToBasket starts/ends");
-        return await _basketServices.AddProductToBasketAsync(productId, basketId);
+        return await _basketServices.AddProductToBasketAsync(orderItem);
     }
 }

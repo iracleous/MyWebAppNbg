@@ -11,6 +11,7 @@ namespace DomainProject.Services;
 public interface ICustomerServices
 {
     public Task<ResponseApi<Customer>> CreateCustomerAsync(Customer customer);
+ //   object CreateCustomerAsync(Func<Customer> isAny);
     public Task<ResponseApi<List<Customer>>>  GetCustomersAsync();
     //public Task<ResponseApi<Customer?>> GetCustomerByIdAsync(int customerId); 
     //public Task<ResponseApi<Customer?>> GetCustomerByNameAsync(string name);
@@ -40,23 +41,15 @@ public interface IServices<T>
 
 public interface IBasketServices
 {
-    public Task<ResponseApi<Basket>> CreateBasketAsync(int customerId);
-    public Task<ResponseApi<Basket>> GetBaskettById(int basketId);
+    public Task<ResponseApi<Basket>> CreateBasketAsync(CustomerInfo customer);
+    public Task<ResponseApi<Basket>> GetBaskettByIdAsync(int basketId);
 
-    public List<Basket> GetBaskets();
-    public void DeleteBasket(int basketId);
-
+    public Task<ResponseApi<List<Basket>>> GetBasketsAsync();
+    public Task<ResponseApi<bool>> DeleteBasketAsync(int basketId);
 
     //
-    public Task<ResponseApi<Basket>> AddProductToBasketAsync(int productId, int basketId);
-    public void RemoveProductFromBasket(Product product, Basket basket);
-    public decimal GetTotalCost(Basket basket);
-    public void AssignCustomerToBasket(Customer customer, Basket basket);
-
-
-    public void AddProductToBasketUsingIds(int productId, int basketID);
-    public void RemoveProductFromBasketUsingIds(int productId, int basketID);
-    public decimal GetTotalCostUsingIds(int basketID);
-    public void AssignCustomerToBasketUsingIds(int customerId, int basketID);
+    public Task<ResponseApi<Basket>> AddProductToBasketAsync(OrderItem orderItem);
+    public Task<ResponseApi<bool>> RemoveProductFromBasketAsync(OrderItem orderItem);
+    public Task<ResponseApi<decimal>> GetTotalCostAsync(Basket basket);
 
 }

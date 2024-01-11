@@ -76,27 +76,7 @@ builder.Services.AddCors(options =>
  * receive an OpenID Connect bearer token.
  * */
 
-//builder.Services
-//    .AddAuthentication(x =>
-//    {
-//        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    })
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(
-//                Encoding.UTF8.GetBytes("YourSecretKey")),
-//            ValidIssuer = "YourIssuer",
-//            ValidAudience = "YourAudience"
-//        };
-//    });
-
+ 
 var app = builder.Build();
 
 //swagger step 2/2

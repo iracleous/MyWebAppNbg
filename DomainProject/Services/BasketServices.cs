@@ -22,40 +22,50 @@ namespace DomainProject.Services
             _logger = logger;
         }
 
-        public async Task<ResponseApi<Basket>> CreateBasketAsync(int customerId)
+        public async Task<ResponseApi<Basket>> CreateBasketAsync(CustomerInfo customerInfo)
         {
-            _logger.Log(LogLevel.Information, $"Adding a basket to {customerId}");
-            Basket? basket = null;
+            _logger.Log(LogLevel.Information, $"Adding a basket ");
+
+             Basket? basket = null;
             int status = 0;
             string message = "";
-            var customer = await _context.Customers.FindAsync(customerId);
-            //validation
-            if (customer != null)
+            if (customerInfo == null)
             {
-                basket = new Basket
-                {
-                    Customer = customer,
-                    OrderTime = DateTime.Now,
-                };
-                _context.Baskets.Add(basket);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    basket = null;
-                    status = CustomErrors.EXCEPTION;
-                    message = ex.Message;
-                }
+
+                status = CustomErrors.NULL_INPUT;
+                message = "null input";
             }
             else
             {
-                basket = null;
-                status = CustomErrors.NULL_INPUT;
-                message = "No such customer";
+                var customer = await _context.Customers.FindAsync(customerInfo.CustomerId);
+                //validation
+                if (customer != null)
+                {
+                    basket = new Basket
+                    {
+                        Customer = customer,
+                        OrderTime = DateTime.Now,
+                    };
+                    
+                    try
+                    {
+                        _context.Baskets.Add(basket);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        basket = null;
+                        status = CustomErrors.EXCEPTION;
+                        message = ex.Message;
+                    }
+                }
+                else
+                {
+                    basket = null;
+                    status = CustomErrors.NULL_INPUT;
+                    message = "No such customer";
+                }
             }
-
             var response =  new ResponseApi<Basket>
             {
                 Data = basket,
@@ -67,9 +77,14 @@ namespace DomainProject.Services
             return response;
         }
 
-        public async Task<ResponseApi<Basket>> AddProductToBasketAsync(int productId, int basketId)
+        public async Task<ResponseApi<Basket>> AddProductToBasketAsync(
+            OrderItem orderItem)
         {
-            _logger.Log(LogLevel.Information, $"Adding a product {productId} to  basket {basketId} starts");
+            _logger.Log(LogLevel.Information, $"Adding a product to  basket   starts");
+
+
+            var productId = orderItem.ProductId;
+            var basketId =orderItem.BasketId;
             var product = await _context.Products.FindAsync(productId);
             var basket = await _context.Baskets.FindAsync(basketId);
             int status;
@@ -98,37 +113,18 @@ namespace DomainProject.Services
             return result;
         }
 
-        public void AddProductToBasketUsingIds(int productId, int basketID)
-        {
-            throw new NotImplementedException();
-        }
+         
 
-        public void AssignCustomerToBasket(Customer customer, Basket basket)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AssignCustomerToBasketUsingIds(int customerId, int basketID)
-        {
-            throw new NotImplementedException();
-        }
-
-       
-
-        public void DeleteBasket(int basketId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Basket> GetBaskets()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<ResponseApi<Basket>> GetBaskettById(int basketId)
+        
+        public async Task<ResponseApi<Basket>> GetBaskettByIdAsync(int basketId)
         {
             _logger.Log(LogLevel.Information, "method starts");
+
+
+           // _context.Baskets.Where(b => b.Id == basketId).Include(b => b.Customer).FirstOrDefaultAsync();
+
             var data = await _context.Baskets.FindAsync(basketId);
+
             var result = new ResponseApi<Basket>
             {
                 Data = data ,
@@ -140,22 +136,22 @@ namespace DomainProject.Services
             return result;
         }
 
-        public decimal GetTotalCost(Basket basket)
+        public Task<ResponseApi<List<Basket>>> GetBasketsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public decimal GetTotalCostUsingIds(int basketID)
+        public Task<ResponseApi<bool>> DeleteBasketAsync(int basketId)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveProductFromBasket(Product product, Basket basket)
+        public Task<ResponseApi<bool>> RemoveProductFromBasketAsync(OrderItem orderItem)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveProductFromBasketUsingIds(int productId, int basketID)
+        public Task<ResponseApi<decimal>> GetTotalCostAsync(Basket basket)
         {
             throw new NotImplementedException();
         }
