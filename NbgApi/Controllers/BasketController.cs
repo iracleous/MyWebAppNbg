@@ -37,10 +37,29 @@ public class BasketController : ControllerBase
     }
 
     [HttpPost]
-    [Route("addTobasket")]
+    [Route("AddTobasket")]
     public async Task<ResponseApi<Basket>> AddToBasket(OrderItem orderItem)
     {
         _logger.Log(LogLevel.Information, "method AddToBasket starts/ends");
         return await _basketServices.AddProductToBasketAsync(orderItem);
     }
+
+
+    [HttpGet]
+    [Route("BasketCost")]
+    public async Task<ResponseApi<decimal>> GetTotalCostAsync(int basketId)
+    {
+        _logger.Log(LogLevel.Information, "method GetTotalCostAsync starts/ends");
+        return await _basketServices.GetTotalCostAsync(basketId);
+    }
+
+    [HttpPost]
+    [Route("RemoveFrombasket")]
+    public async Task<ResponseApi<bool>> RemoveFrombasket(OrderItem orderItem)
+    {
+        _logger.Log(LogLevel.Information, "method RemoveFrombasket starts/ends");
+        return await _basketServices.RemoveProductFromBasketAsync(orderItem);
+    }
+
+
 }

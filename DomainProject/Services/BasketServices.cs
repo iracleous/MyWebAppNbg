@@ -1,6 +1,7 @@
 ﻿using DomainProject.Data;
 using DomainProject.Dto;
 using DomainProject.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -121,9 +122,14 @@ namespace DomainProject.Services
             _logger.Log(LogLevel.Information, "method starts");
 
 
-           // _context.Baskets.Where(b => b.Id == basketId).Include(b => b.Customer).FirstOrDefaultAsync();
+            var data = await _context
+                      .Baskets
+                      .Where(b => b.Id == basketId)
+                      .Include(b => b.Customer)
+                      .Include(b => b.Products)
+                      .FirstOrDefaultAsync();
 
-            var data = await _context.Baskets.FindAsync(basketId);
+        //    var data = await _context.Baskets.FindAsync(basketId);
 
             var result = new ResponseApi<Basket>
             {
@@ -146,14 +152,76 @@ namespace DomainProject.Services
             throw new NotImplementedException();
         }
 
-        public Task<ResponseApi<bool>> RemoveProductFromBasketAsync(OrderItem orderItem)
+        public async Task<ResponseApi<bool>> RemoveProductFromBasketAsync(OrderItem orderItem)
         {
-            throw new NotImplementedException();
+            var productId = orderItem.ProductId;
+            var basketId = orderItem.BasketId;
+            try { 
+///* error in execution */
+
+//                var basket = await _context.Baskets
+//                    .Include(basket => basket.Products)
+//                    .Where(basket => basket.Id == basketId)
+//                    .SingleAsync();
+
+
+//                var productsToRemove = basket
+//                    .Products
+//                    .Where(product => product.Id == productId);
+//                foreach ( var product in productsToRemove ) { basket.Products.Remove(product);  }
+
+                await _context.SaveChangesAsync();
+
+                return new ResponseApi<bool>
+                {
+                    Data = true
+                };
+            }
+            catch(Exception ex)
+            {
+                return new ResponseApi<bool>
+                {
+                    Data = false,
+                    Status =2,
+                    Message= ex.Message
+                };
+
+            }
+
+            
+
+
+
         }
 
-        public Task<ResponseApi<decimal>> GetTotalCostAsync(Basket basket)
+        public async Task<ResponseApi<decimal>> GetTotalCostAsync(int basketId)
         {
-            throw new NotImplementedException();
+            try {
+                var basket = await _context
+                        .Baskets
+                        .Where(basket => basket.Id == basketId)
+                        .Include(basket => basket.Products)
+                        .SingleAsync();
+                var result = basket
+                    .Products
+                    .Sum(product => product.Price);
+                return new ResponseApi<decimal>
+                {
+                    Data = result,
+                    Status = 0,
+                    Message = "ok"
+                };
+            }    
+            catch (Exception e)
+            {
+                return new ResponseApi<decimal>
+                {
+                Status = 10,
+                Message = e.Message
+                };
+            }
+                  
         }
     }
-}
+ }
+

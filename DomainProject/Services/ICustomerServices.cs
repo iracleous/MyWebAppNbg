@@ -50,6 +50,6 @@ public interface IBasketServices
     //
     public Task<ResponseApi<Basket>> AddProductToBasketAsync(OrderItem orderItem);
     public Task<ResponseApi<bool>> RemoveProductFromBasketAsync(OrderItem orderItem);
-    public Task<ResponseApi<decimal>> GetTotalCostAsync(Basket basket);
+    public Task<ResponseApi<decimal>> GetTotalCostAsync(int basketId);
 
 }
