@@ -11,6 +11,6 @@ namespace DomainProject.Dto
         public int CustomerId { get; set; }
         public int EmployeeId { get; set; }
         public int PosId { get; set; }
-        public string LocationName { get; set; }
+        public string? LocationName { get; set; }
     }
 }

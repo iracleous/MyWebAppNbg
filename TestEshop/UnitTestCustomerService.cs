@@ -18,14 +18,11 @@ public class UnitTestCustomerService
     {
         var customer = new Customer { };
 
-
         var testData = new List<Customer>
-    {
-        new Customer { Id = 1, Name = "D1" },
-        new Customer { Id = 2, Name = "D2" }
-    };
-
-
+        {
+            new() { Id = 1, Name = "D1" },
+            new() { Id = 2, Name = "D2" }
+        };
 
         Assert.NotNull(customer);
 
@@ -35,8 +32,6 @@ public class UnitTestCustomerService
         mockDbContext.Setup(db => db.Customers.Find(It.IsAny<int>()))
                 .Returns<int>(id => testData.SingleOrDefault(p => p.Id == id));
 
-
-
         ICustomerServices services = new CustomerServices(mockDbContext.Object, mockLogger.Object);
         // Act
         var result = await services.GetCustomersAsync();
@@ -44,10 +39,7 @@ public class UnitTestCustomerService
         // Assert
         Assert.NotNull(result);
         Assert.Equal(0, result.Status);
-
     }
-
-
 
     [Theory]
     [InlineData(3, 2, 5 )]  // 3 + 2 * (3 - 2) = 5
@@ -70,8 +62,4 @@ public class UnitTestCustomerService
         // Assert
         Assert.Equal(expectedResult, result);
     }
-
-
-
-
 }

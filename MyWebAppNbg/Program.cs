@@ -14,15 +14,11 @@ builder.Services.AddControllersWithViews()
                 .ReferenceHandler = ReferenceHandler.Preserve;
            });
 
-
 var optionsCon = builder.Configuration
            .GetConnectionString("MyConn");
 builder.Services.AddDbContext<EshopDbContext>(options =>
         options.UseSqlServer(optionsCon));
 
-
-// JSON options
- 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
