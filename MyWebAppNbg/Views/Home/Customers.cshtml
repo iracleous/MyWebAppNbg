@@ -6,12 +6,19 @@
 
 @model IEnumerable<DomainProject.Models.Customer>
 
+ 
+
+
 @if (Model != null)
 {
+    <table id ="mytable" ><tr><th>Id</th><th>Name</th></tr>
     @foreach (var item in Model)
     {
-        <p> Id = @item.Id  Name = @item.Name </p>
+            <tr >
+                <td> @item.Id  </td>
+                <td> @item.Name </td>
+            </tr>
     }
-  
+  </table>
 
 }     

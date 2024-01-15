@@ -1,3 +1,4 @@
+using DomainProject.Dto;
 using DomainProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyWebAppNbg.Models;
@@ -50,7 +51,8 @@ namespace MyWebAppNbg.Controllers
                 //Storing the response details recieved from web api
                 var EmpResponse = result.Content.ReadAsStringAsync().Result;
                 //Deserializing the response recieved from web api and storing into the Employee list
-                  customers = JsonConvert.DeserializeObject<List<Customer>>(EmpResponse);
+                var data = JsonConvert.DeserializeObject<ResponseApi<List<Customer>>>(EmpResponse);
+                customers = data?.Data;
             }
             return View(customers);
         }
