@@ -1,3 +1,4 @@
+using Azure.Identity;
 using DemoJwt.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,11 +37,11 @@ public class WtForSecController : ControllerBase
 
 
     [HttpGet]
-    [Route("c/{username}")]
-    public string GetToken(string username)
+    [Route("c")]
+    public string GetToken([FromQuery(Name ="username")]string username, [FromQuery(Name = "password")] string password)
     {
         _logger.Log(LogLevel.Information, "GetToken starts/ends");
-        return GenerateJwtToken(username);
+        return GenerateJwtToken(username, password);
     }
 
     /**
@@ -88,7 +89,7 @@ public class WtForSecController : ControllerBase
         return userId;
     }
 
-    private string GenerateJwtToken(string username)
+    private static string GenerateJwtToken(string username, string password)
     {
 
         // Replace "your-secret-key" with your actual secret key
@@ -105,7 +106,7 @@ public class WtForSecController : ControllerBase
         var token = new JwtSecurityToken(
             issuer: "your-issuer",
             audience: "your-audience",
-            claims: new[] { new Claim(ClaimTypes.Name, username) },
+            claims: new[] { new Claim(ClaimTypes.Name, username) , new Claim(ClaimTypes.Country,"Greece")},
             expires: DateTime.UtcNow.AddMinutes(15),
             signingCredentials: credentials
         );

@@ -36,7 +36,8 @@ function createProduct() {
 	})
 		.then(res => res.json())
 		.then(d => {
-			document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+			//	document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+			document.getElementById("resultDiv").innerHTML = "name= " + d.name + " id= " + d.id + " price= " + d.price;
 		})
 		.catch(error => {
 			if (error instanceof TypeError && error.message.includes('API key')) {
@@ -115,7 +116,7 @@ function getAllProduct() {
 			document.getElementById("resultDiv").innerHTML = ""; // JSON.stringify(dataArray);
 			dataMyArray = dataArray.$values
 			dataMyArray.forEach(element =>
-				document.getElementById("resultDiv").innerHTML += "id = " + element.id + " nme = " + element.name + "<br>"
+				document.getElementById("resultDiv").innerHTML += "id = " + element.id + " name = " + element.name + "<br>"
 			);
 		})
 		.catch(error => {

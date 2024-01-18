@@ -98,11 +98,13 @@ if (app.Environment.IsDevelopment())
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
+//security 2/2
+app.UseAuthentication();
+
+
 app.UseAuthorization();
 app.MapControllers();
 
-//security 2/2
-app.UseAuthentication();
 
 //cors 3/3
 app.UseCors(MyAllowSpecificOrigins);

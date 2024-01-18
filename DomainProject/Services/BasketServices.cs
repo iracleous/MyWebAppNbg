@@ -164,7 +164,8 @@ public class BasketServices : IBasketServices
 
             return new ResponseApi<bool>
             {
-                Data = true
+                Data = true,
+                Message ="The product has been removed from the basket"
             };
         }
         catch(Exception ex)

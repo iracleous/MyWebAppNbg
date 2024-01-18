@@ -11,12 +11,14 @@
 
 @if (Model != null)
 {
-    <table id ="mytable" ><tr><th>Id</th><th>Name</th></tr>
+    <table id ="mytable" ><tr><th>Id</th><th>Name</th><th>Address</th><th>Category</th></tr>
     @foreach (var item in Model)
     {
             <tr >
                 <td> @item.Id  </td>
                 <td> @item.Name </td>
+                <td> @item.Address</td>
+                <td> @item.Category</td>
             </tr>
     }
   </table>
