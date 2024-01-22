@@ -29,3 +29,27 @@ public class Calculator
         return result;
     }
 }
+public class CalculatorItem
+{
+    private decimal _a;
+    private decimal _b;
+    public CalculatorItem(decimal a, decimal b)
+    {
+        _a = a;
+        _b = b;
+    }
+
+    public decimal PerformComplexCalculation()
+    {
+        //// Some complex calculation involving the external service
+        //if (_b == 0)
+        //{
+        //    throw new Exception();
+        //}
+        decimal result = _a / _b;
+
+        return result;
+    }
+}
+
+

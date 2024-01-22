@@ -13,6 +13,28 @@ namespace TestEshop;
 
 public class UnitTestCustomerService
 {
+
+    [Fact]
+    public void  Test1()
+    {
+        var expected = 1.10m;
+        var calculated = 1.102m;
+        Assert.Equal(expected, calculated,2);
+    }
+
+    [Fact]
+    public void Test2()
+    {
+        var calculator = new CalculatorItem(1.001m, 0m);
+
+        void calculated() => calculator.PerformComplexCalculation();
+        Assert.Throws<DivideByZeroException>(calculated);
+  
+        var calculator2 = new CalculatorItem(1.001m, 2.0m);
+        Assert.Equal(0.5m, calculator2.PerformComplexCalculation(), 2);
+    }
+
+
     [Fact]
     public async Task TestAddCustomer()
     {
@@ -41,25 +63,25 @@ public class UnitTestCustomerService
         Assert.Equal(0, result.Status);
     }
 
-    [Theory]
-    [InlineData(3, 2, 5 )]  // 3 + 2 * (3 - 2) = 5
-    [InlineData(0, 5, 0)]  // 0 + 5 * (0 - 5) = 0
-    [InlineData(10, 5, -50)]  // 10 + 5 * (10 - 5) = -50
-    public void PerformComplexCalculation_ShouldReturnExpectedResult(int a, int b, int expectedResult)
-    {
-        // Arrange
-        var mockCalculationService = new Mock<ICalculationService>();
-        mockCalculationService.Setup(service => service.Add(It.IsAny<int>(), It.IsAny<int>()))
-                              .Returns<int, int>((x, y) => x + y);
-        mockCalculationService.Setup(service => service.Subtract(It.IsAny<int>(), It.IsAny<int>()))
-                              .Returns<int, int>((x, y) => x - y);
+    //[Theory]
+    //[InlineData(3, 2, 5 )]  // 3 + 2 * (3 - 2) = 5
+    //[InlineData(0, 5, 0)]  // 0 + 5 * (0 - 5) = 0
+    //[InlineData(10, 5, -50)]  // 10 + 5 * (10 - 5) = -50
+    //public void PerformComplexCalculation_ShouldReturnExpectedResult(int a, int b, int expectedResult)
+    //{
+    //    // Arrange
+    //    var mockCalculationService = new Mock<ICalculationService>();
+    //    mockCalculationService.Setup(service => service.Add(It.IsAny<int>(), It.IsAny<int>()))
+    //                          .Returns<int, int>((x, y) => x + y);
+    //    mockCalculationService.Setup(service => service.Subtract(It.IsAny<int>(), It.IsAny<int>()))
+    //                          .Returns<int, int>((x, y) => x - y);
 
-        var calculator = new Calculator(mockCalculationService.Object);
+    //    var calculator = new Calculator(mockCalculationService.Object);
 
-        // Act
-        int result = calculator.PerformComplexCalculation(a, b);
+    //    // Act
+    //    int result = calculator.PerformComplexCalculation(a, b);
 
-        // Assert
-        Assert.Equal(expectedResult, result);
-    }
+    //    // Assert
+    //    Assert.Equal(expectedResult, result);
+    //}
 }

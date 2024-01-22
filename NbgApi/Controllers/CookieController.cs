@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using NbgApi.Services;
 using System.Net;
 
 namespace DemoJwt.Controllers;
@@ -8,52 +9,38 @@ namespace DemoJwt.Controllers;
 [Route("api/[controller]")]
 public class CookieController : ControllerBase
 {
+    private readonly ICookieServices _cookieServices;
+    public CookieController(ICookieServices services)
+    {
+         _cookieServices = services;
+    }
+
+
+
     [HttpGet]
     [Route("set")]
     public string SetCookie()
     {
-        // Create a new cookie
-        var cookie = new Cookie("myCookie", "cookie-value");
-
-        // Set the cookie in the response
-        Response.Cookies.Append(cookie.Name, cookie.Value);
-
-        return  "Cookie set successfully" ;
+        return _cookieServices.AddCookie(Response, "myCookie", "value");
     }
 
     [HttpGet]
     [Route("get")]
     public string GetCookie()
     {
-        // Retrieve the value of the "myCookie" cookie
-        var cookieValue = Request.Cookies["myCookie"];
-
-        if (cookieValue != null)
-        {
-            return  $"Cookie value: {cookieValue}" ;
-        }
-        else
-        {
-            return  "Cookie not found" ;
-        }
-
+       return _cookieServices.ReadCookie(Request, "myCookie" );
+  }
+    [HttpGet]
+    [Route("reset")]
+    public string DeletetCookie()
+    {
+        return _cookieServices.DeleteCookie(Request, Response, "myCookie");
     }
     [HttpGet]
     [Route("seto")]
     public string SetCookieWithOptions()
     {
-        // Create a cookie with options
-        var cookieOptions = new CookieOptions
-        {
-            Expires = DateTime.Now.AddMinutes(30),
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict
-        };
-
-        Response.Cookies.Append("myCookieWithOptions", "cookie-value-with-options", cookieOptions);
-
-        return  "Cookie with options set successfully";
+        return _cookieServices.AddCookieWithParameters(Response, "myCookieWithOptions", "cookie-value-with-options");
     }
 
 

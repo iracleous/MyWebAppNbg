@@ -5,6 +5,7 @@ using DomainProject.Data;
 using DomainProject.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NbgApi.Services;
 using System.Security.AccessControl;
@@ -33,6 +34,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IWeatherForcastService, WeatherForcastService>();
 builder.Services.AddScoped<ICustomerServices, CustomerServices>();
 builder.Services.AddScoped<IProductServices, ProductServices>();
+
+builder.Services.AddScoped<ICookieServices, CookieServices>();
 builder.Services.AddScoped<IBasketServices, BasketServices>();
 
 var optionsCon =  builder.Configuration.GetConnectionString("MyConn");
@@ -68,6 +71,10 @@ builder.Services.AddCors(options =>
  * // reading the header from a request and parsing it
  * */
 
+ 
+var securitySecret = builder.Configuration.GetValue<string>("Security:Secret") 
+                        ?? SecurityInfo.SecretKey;
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -82,7 +89,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = "your-issuer",  // Replace with your issuer
         ValidAudience = "your-audience",  // Replace with your audience
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecurityInfo.SecretKey))  // Replace with your secret key
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securitySecret))  // Replace with your secret key
     };
 });
 
